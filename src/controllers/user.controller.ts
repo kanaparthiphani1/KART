@@ -13,7 +13,7 @@ export const addAddress = async (req: Request, res: Response) => {
     data: {
       ...req.body,
       //@ts-ignore
-      userId: req.user.id,
+      userId: +req.user.id,
     },
   });
   res.json(address);
@@ -36,12 +36,18 @@ export const deleteAddress = async (req: Request, res: Response) => {
 };
 
 export const listAddress = async (req: Request, res: Response) => {
+  //@ts-ignore
+  console.log("User in contr : ", req.user);
+
   const addresses = await prismaClient.address.findMany({
     where: {
       //@ts-ignore
       userId: req.user.id,
     },
   });
+
+  console.log("printed");
+
   res.json(addresses);
 };
 
@@ -71,6 +77,7 @@ export const updateUser = async (req: Request, res: Response) => {
       );
     }
   }
+
   if (validatedData.defaultBillingAddress) {
     try {
       billingAddress = await prismaClient.address.findFirstOrThrow({

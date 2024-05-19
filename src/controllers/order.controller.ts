@@ -97,21 +97,23 @@ export const getOrderById = async (req: Request, res: Response) => {
 
 export const cancelOrder = async (req: Request, res: Response) => {
   try {
-    const order = await prismaClient.order.update({
-      where: {
-        id: +req.params.id,
-      },
-      data: {
-        status: "CANCELLED",
-      },
+    await prismaClient.$transaction(async (tx) => {
+      const order = await tx.order.update({
+        where: {
+          id: +req.params.id,
+        },
+        data: {
+          status: "CANCELLED",
+        },
+      });
+      await tx.orderEvent.create({
+        data: {
+          orderId: order.id,
+          status: "CANCELLED",
+        },
+      });
+      res.json(order);
     });
-    await prismaClient.orderEvent.create({
-      data: {
-        orderId: order.id,
-        status: "CANCELLED",
-      },
-    });
-    res.json(order);
   } catch (err) {
     throw new NotFoundException("Order not found", ErrorCodes.ORDER_NOT_FOUND);
   }

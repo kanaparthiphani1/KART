@@ -109,6 +109,7 @@ model Order {
   @@map("orders")
 }
 
+//bridge table for m:m
 model OrderProduct {
   id Int @id @default(autoincrement())
   orderId Int

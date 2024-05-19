@@ -13,31 +13,42 @@ import adminMiddleware from "../../middlewares/admin.middleware";
 
 const productRouter = Router();
 
+//search products
+productRouter.get("/search", [authMiddleware], errorHandler(searchProducts));
+
+//Create a new product
 productRouter.post(
   "/",
   [authMiddleware, adminMiddleware],
   errorHandler(createProduct)
 );
-productRouter.put(
-  "/:id",
-  [authMiddleware, adminMiddleware],
-  errorHandler(updateProduct)
-);
-productRouter.delete(
-  "/:id",
-  [authMiddleware, adminMiddleware],
-  errorHandler(deleteProduct)
-);
+
+//Get all products
 productRouter.get(
   "/",
   [authMiddleware, adminMiddleware],
   errorHandler(listProducts)
 );
+
+//get product by id
 productRouter.get(
   "/:id",
   [authMiddleware, adminMiddleware],
   errorHandler(getProductById)
 );
-productRouter.get("/search", [authMiddleware], errorHandler(searchProducts));
+
+//update product by id
+productRouter.put(
+  "/:id",
+  [authMiddleware, adminMiddleware],
+  errorHandler(updateProduct)
+);
+
+//delete product by id
+productRouter.delete(
+  "/:id",
+  [authMiddleware, adminMiddleware],
+  errorHandler(deleteProduct)
+);
 
 export default productRouter;

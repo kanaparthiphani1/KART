@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { UnauthorizedException } from "../expections/unauthorized";
 import { ErrorCodes } from "../expections/root";
 import * as jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../secrets";
+import { JWT_SECRET } from "../config";
 import { prismaClient } from "..";
 
 const authMiddleware = async (
@@ -21,6 +21,8 @@ const authMiddleware = async (
     const user = await prismaClient.user.findFirst({
       where: { id: payload.userId },
     });
+    console.log("User :  ", user);
+
     if (!user) {
       return next(
         new UnauthorizedException("Unauthorized", ErrorCodes.UNAUTHORIZED)
@@ -28,6 +30,9 @@ const authMiddleware = async (
     }
     // @ts-ignore
     req.user = user;
+    // @ts-ignore
+    console.log("prinyted user : ", req.user);
+
     next();
   } catch (error) {
     next(new UnauthorizedException("Unauthorized", ErrorCodes.UNAUTHORIZED));

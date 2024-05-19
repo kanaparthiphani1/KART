@@ -2,10 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { prismaClient } from "..";
 import { hashSync, compareSync } from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../secrets";
+import { JWT_SECRET } from "../config";
 import { BadRequestException } from "../expections/bad-request";
 import { ErrorCodes } from "../expections/root";
-import { UnProcessableEntity } from "../expections/validation";
 import { SignUpSchema } from "../schema/users";
 import { NotFoundException } from "../expections/not-found";
 
