@@ -42,7 +42,7 @@ export const login = async (req: Request, res: Response) => {
   }
   if (!compareSync(password, user.password)) {
     throw new BadRequestException(
-      "Incorrect password",
+      "Wrong password",
       ErrorCodes.INCORRECT_PASSWORD
     );
   }
