@@ -6,6 +6,8 @@
   "scripts": {
     "start": "npx nodemon",
     "build": "tsc -b",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
