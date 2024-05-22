@@ -8,6 +8,8 @@
     "build": "tsc -b",
     "db:generate": "npx prisma generate",
     "db:migrate": "npx prisma migrate dev",
+    "start:prod": "node dist/index.js",
+    "start:migarte:prod": "npx prisma migrate dev && npm run start:prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
